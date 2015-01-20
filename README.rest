@@ -1,0 +1,52 @@
+.. vim: ft=rst sts=2 sw=2 tw=77
+
+.. :Author: Roman Neuhauser
+.. :Contact: neuhauser+git-grope@sigpipe.cz
+.. :Copyright: This document is in the public domain.
+
+.. this file is marked up using reStructuredText
+   lines beginning with ".." are reST directives
+   "foo_" or "`foo bar`_" is a link, defined at ".. _foo" or ".. _foo bar"
+   "::" introduces a literal block (usually some form of code)
+   "`foo`" is some kind of identifier
+   suspicious backslashes in the text ("`std::string`\s") are required for
+   reST to recognize the preceding character as syntax
+
+.. default-role:: strong
+.. parsed-literal::
+
+  `NAME`
+       `git-grope` — List tracked files matching patterns
+
+
+  `SYNOPSIS`
+       `git-grope` [-EFGP] *PATTERN* [*PATH*]...
+
+  `DESCRIPTION`
+       Outputs paths to files matching given patterns, with their relevance
+       scores, in decreasing order of relevance.  A path is included in the
+       output iff the file content matches at least one *PATTERN*.
+       Relevance is given as the count of matches across all given
+       *PATTERN*\s.
+
+  `ENVIRONMENT`
+       `git-grope` itself uses no environment variables.
+       It is, however, implemented in terms of third-party commands which
+       *do* use them.  This means `git-grope` may be influenced
+       by environment variables used by *git(1)*, *grep(1)*, *zsh(1)*,
+       possibly others.
+
+  `DIAGNOSTICS`
+       The `git-grope` utility exits 0 on success, and >0 if an error occurs.
+
+  `SEE ALSO`
+       *git-grep(1)*, *grep(1)*.
+
+  `AUTHORS`
+       Roman Neuhauser <neuhauser+git-grope@sigpipe.cz>
+           https://github.com/roman-neuhauser/git-grope/
+
+  `BUGS`
+       No doubt plentiful.  Please report them at
+           https://github.com/roman-neuhauser/git-grope/issues
+

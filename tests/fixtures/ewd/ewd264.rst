@@ -1,0 +1,98 @@
+======================================================================
+                      On Understanding Programs
+======================================================================
+----------------------------------------------------------------------
+                               EWD 264
+----------------------------------------------------------------------
+
+:Author: Edsger W. Dijkstra
+:Transcribed by: Tristram Brelstaff
+:Revised: Thu, 14 Jul 2005
+:Source: http://www.cs.utexas.edu/users/EWD/transcriptions/EWD02xx/EWD264.html
+
+
+
+On a number of occasions I have stated the requirement that if we ever
+want to be able to compose really large programs reliably, we need a
+discipline such that the intellectual effort *E* (measured in some
+loose sense) needed to understand a program does not grow more rapidly
+than proportional to the program length *L* (measured in an equally
+loose sense) and that if the best we can attain is a growth of *E*
+proportional to, say *L**2*, we had better admit defeat. As an aside I
+used to express my fear that many programs were written in such a
+fashion that the functional dependence was more like an exponential
+growth!
+
+I now offer, for the reader's consideration, an example showing how
+the same program can be understood in two different ways: in the one
+way, *E* grows proportional to *L*, in the other way it grows (even
+worse than) exponentially.
+
+I express *E* in the number of "steps of reasoning" needed, a number
+which is determined as follows.
+
+Let us consider a "stretched" program of the form (1)::
+
+        S1; S2; ...; SN
+
+i.e. the corresponding computations are a time-succession of the
+executions of *S1* through *SN* in that order. When the nett effect of the
+execution of each individual statement *Si* is given, my measuring
+convention states that it takes *N* steps to understand program (1),
+i.e. to establish that the cumulative effect of *N* successive actions
+satisfies the requirements imposed upon the computations evoked by
+program (1).
+
+In the case of a program of the form (2)::
+
+        if B then S1 else S2
+
+where, again, the nett effect of the execution of the statements *S1*
+and *S2* has been given, my measuring convention states that it takes
+2 steps to understand program (2), viz. one step for the case *B* and
+another for the case _non_ *B*.
+
+Consider now a program of the form (3)::
+
+        if B1 then S11 else S12;
+        if B2 then S21 else S22;
+                             .
+                             .
+                             .
+        if BN then SN1 else SN2
+
+According to the measuring convention it takes 2 steps per alternative
+statement to understand it, i.e. to establish that the nett effect of::
+
+        if Bi then Si1 else Si2
+
+is equivalent to that of the execution of an abstract statement *Si*.
+Having *N* such alternative statements it takes us *2N* steps to reduce
+program (3) to one of the form of program (1); to understand the
+latter form of the program takes us another *N* steps, giving 3N steps
+of reasoning in toto.
+
+If we had not introduced the abstract statements *Si* , but had tried
+to understand program (3) directly in terms of executions of the
+statements *Sij*, each such computation would be the cumulative effect
+of *N* such statement executions and would as such require *N* steps
+to understand it. Trying to understand the algorithm in terms of the
+*Sij*, however, implies that we have to distinguish between *2N*
+different routings through the program and this would lead to *N*2N*
+steps of reasoning!
+
+If by now the reader protests that the second way to try to understand
+program (3) is utterly foolish, then I have him exactly in the
+position where I want him to be, for then we could not agree more
+fully. The point is, that any effort to improve upon the second method
+yields a method more similar to the first one: one will find oneself
+introducing the abstract statements *Si* (or combinations of them)!
+
+The whole demonstration is an urgent plea to use our powers of
+abstraction as consciously as possible (and to restrict ourselves in
+programming to those program structures in which these powers can be
+exploited at greatest advantage!) The reader who has followed me thus
+far may wonder whether he has been confronted with something deep or
+something trivial. So did I, when I discovered this example; I have,
+however, decided to submit it for publication when I felt that it was
+probably both.

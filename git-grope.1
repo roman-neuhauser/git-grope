@@ -1,0 +1,95 @@
+.\" This document is in the public domain.
+.\" vim: fdm=marker
+.
+.\" FRONT MATTER {{{
+.Dd Jan 20, 2015
+.Os
+.Dt GIT-GROPE 1
+.
+.Sh NAME
+.Nm git-grope
+.Nd List tracked files matching patterns
+.\" FRONT MATTER }}}
+.
+.\" SYNOPSIS {{{
+.Sh SYNOPSIS
+.Nm
+.Op Fl EFGP
+.Ar PATTERN
+.Op Ar PATH Ns \&...
+.\" SYNOPSIS }}}
+.
+.\" DESCRIPTION {{{
+.Sh DESCRIPTION
+Outputs paths to files matching given patterns, with their relevance scores,
+in decreasing order of relevance.
+A path is included in the output iff the file content matches at least one
+.Ar PATTERN .
+Relevance is given as the count of matches across all given
+.Ar PATTERN Ns s.
+.
+.Ss Options
+.Bl -tag -width "xx"
+. It Fl E
+Interpret
+.Ar PATTERN Ns s
+as extended regular expressions (ERE).
+. It Fl F
+Interpret
+.Ar PATTERN Ns s
+as fixed strings.
+. It Fl G
+Interpret
+.Ar PATTERN Ns s
+as basic regular expressions (BRE).
+This is the default behavior.
+. It Fl P
+Interpret
+.Ar PATTERN Ns s
+as Perl regexps (PCRE).
+.El
+.\" DESCRIPTION }}}
+.\" ENVIRONMENT {{{
+.Sh ENVIRONMENT
+.Nm
+itself uses no environment variables.
+It is, however, implemented in terms of third-party commands
+which
+.Em do
+use them.
+This means
+.Nm
+may be influenced by environment variables used by
+.Xr git 1  ,
+.Xr grep 1  ,
+.Xr zsh 1 ,
+possibly others.
+.\" ENVIRONMENT }}}
+.\" EXAMPLES {{{
+.\"Sh EXAMPLES
+.\" EXAMPLES }}}
+.\" DIAGNOSTICS {{{
+.Sh DIAGNOSTICS
+.Ex -std
+.\" DIAGNOSTICS }}}
+.\" SEE ALSO {{{
+.Sh SEE ALSO
+.Bl
+.It
+.Xr git-grep 1 ,
+.Xr grep 1 .
+.El
+.\" SEE ALSO }}}
+.\" .Sh STANDARDS
+.\" .Sh HISTORY
+.\" AUTHORS {{{
+.Sh AUTHORS
+.An Roman Neuhauser Aq Mt neuhauser+git-grope@sigpipe.cz
+.Lk https://github.com/roman-neuhauser/git-grope/
+.\" AUTHORS }}}
+.\" BUGS {{{
+.Sh BUGS
+No doubt plentiful.
+Please report them at
+.Lk https://github.com/roman-neuhauser/git-grope/issues
+.\" BUGS }}}

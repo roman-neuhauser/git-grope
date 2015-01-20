@@ -1,0 +1,8 @@
+.sw?
+.*.sw?
+.bs-update
+*.gz
+*.html
+*.spec
+/PKGBUILD
+/git-grope
