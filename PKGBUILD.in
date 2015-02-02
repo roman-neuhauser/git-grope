@@ -12,7 +12,11 @@ source=($pkgname-$_upstreamver.tar.gz)
 sha1sums=(SKIP)
 
 build() {
-  _make
+  _make most
+}
+
+check() {
+  _make check
 }
 
 package() {
