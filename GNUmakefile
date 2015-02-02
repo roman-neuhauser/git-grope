@@ -6,8 +6,6 @@ MANDIR         ?= $(PREFIX)/share/man
 MAN1DIR        ?= $(MANDIR)/man1
 
 CRAMCMD         = cram
-CRAM            = --shell $(SHELL)
-export CRAM
 
 GZIPCMD        ?= gzip
 INSTALL_DATA   ?= install -m 644
@@ -42,7 +40,7 @@ clean:
 
 .PHONY: check
 check: $(.DEFAULT_GOAL)
-	$(CRAMCMD) tests
+	env -i CRAM="$(CRAM)" SHELL="$(SHELL)" $(CRAMCMD) --shell=$(SHELL) tests
 
 .PHONY: html
 html: README.html
