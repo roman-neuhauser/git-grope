@@ -93,7 +93,7 @@ function set-config-vars # {{{
   local n
   for n in GIT_WORK_TREE GIT_DIR gropetool syntax url_prefix; do
     if (( ${+GIT_GROPE_CFG[$n]} )); then
-      : ${(P)n::=$GIT_GROPE_CFG[$n]}
+      : ${(P)n::=${(e)GIT_GROPE_CFG[$n]}}
       [[ $n == GIT_* ]] && export $n
     fi
   done
