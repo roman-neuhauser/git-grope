@@ -178,7 +178,7 @@ $(
     # html-safe
     file=${file//${(k~j:|:)to_html}/$to_html[$match[1]]}
     print -f '<li>%d hits in <a href="%s%s">%s</a></li>\n' \
-      $cnt $url_prefix $file ${file/%.rest/.html}
+      $cnt "$url_prefix" $file ${file/%.rest/.html}
   done
 )
    </ol>
