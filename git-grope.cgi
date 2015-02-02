@@ -20,7 +20,10 @@ declare url_prefix=
 declare heap=${${${PATH_INFO#/}%/}:-default}
 declare query=
 
-() # slurp config file {{{
+declare -a terms
+declare -A checked
+
+function load-config # {{{
 # populate $GIT_GROPE_CFG w/ $wanted section data from $cfgfile
 #
 # config file is a sequence of statements;
@@ -80,9 +83,9 @@ declare query=
 
   local name=GIT_GROPE_SETTINGS_${wanted//[^[:IDENT:]]/_}
   declare -Ag GIT_GROPE_CFG; GIT_GROPE_CFG=(${(Pkv)name})
-} $heap $cfgfile || exit 1 # }}}
+} # }}}
 
-() # process configuration {{{
+function set-config-vars # {{{
 {
   local n
   for n in GIT_WORK_TREE GIT_DIR gropetool syntax url_prefix; do
@@ -93,14 +96,9 @@ declare query=
   done
 } # }}}
 
-declare -a terms
-declare -A checked
-
-() # process user input {{{
+function handle-user-inputs # {{{
 {
-  #typeset -p QUERY_STRING
   for kv in ${(s:&:)QUERY_STRING}; do
-    #typeset -p kv
     case $kv in
     q=*)
       # decode application/x-www-form-urlencoded data
@@ -110,7 +108,6 @@ declare -A checked
       # decode '"%" HEXDIG HEXDIG'-encoded octets
       setopt local_options c_bases nomultibyte
       v=${v//(#b)%(??)/${(#):-0x$match[1]}}
-      #typeset -p v
       terms+=($=v)
       ;;
     syn=(bre|ere|fix|pre))
@@ -120,6 +117,12 @@ declare -A checked
   done
   checked=($syntax checked)
 } # }}}
+
+load-config $heap $cfgfile || exit 1
+
+set-config-vars
+
+handle-user-inputs
 
 declare -A to_html; to_html=(
   '"' '&#0034;'
