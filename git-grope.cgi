@@ -37,6 +37,10 @@ function load-config # {{{
   local default= stmt=
   local -a sections
 
+  if ! [[ -f $cfgfile && -r $cfgfile ]]; then
+    complain 1 "${0:t}: $cfgfile: No such file or directory"
+  fi
+
   # iterate lines of $cfgfile, ignoring empty lines;
   # a statement is complete as soon we have a new one,
   # the last statement of the $cfgfile is handled by
@@ -76,10 +80,9 @@ function load-config # {{{
   esac
 
   if [[ ${sections[(i)$wanted]} -gt $#sections ]]; then
-    print -f 'requested configuration (%s) not found in %s\n' \
+    complain 1 -f 'requested configuration (%s) not found in %s\n' \
       -- $wanted $cfgfile
-    return 1
-  fi >&2
+  fi
 
   local name=GIT_GROPE_SETTINGS_${wanted//[^[:IDENT:]]/_}
   declare -Ag GIT_GROPE_CFG; GIT_GROPE_CFG=(${(Pkv)name})
@@ -116,6 +119,12 @@ function handle-user-inputs # {{{
     esac
   done
   checked=($syntax checked)
+} # }}}
+
+function complain # {{{
+{
+  print -u 2 ${@[2,-1]}
+  exit $1
 } # }}}
 
 load-config $heap $cfgfile || exit 1
