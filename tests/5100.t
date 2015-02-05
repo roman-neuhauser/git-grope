@@ -62,7 +62,6 @@ test
      </ol>
      </p>
   
-     KTHXBYE!
     </body>
     </html>
 

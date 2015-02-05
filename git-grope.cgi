@@ -188,7 +188,6 @@ $(
    </ol>
    </p>
 
-   KTHXBYE!
   </body>
   </html>
 HTML
