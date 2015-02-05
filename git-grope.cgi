@@ -134,14 +134,14 @@ set-config-vars
 handle-user-inputs
 
 declare -A to_html; to_html=(
-  '"' '&#0034;'
-  "'" '&#0039;'
-  '<' '&#0060;'
-  '>' '&#0062;'
+  \" '&#0034;'
+  \' '&#0039;'
+  \< '&#0060;'
+  \> '&#0062;'
 )
 
 # html-safe
-declare -a htmlterms; htmlterms=(${terms//(#b)(${(k~j:|:)to_html})/$to_html[$match[1]]})
+declare -a htmlterms; htmlterms=(${terms//(#b)${~${(kj:|:)to_html}}/$to_html[$match[1]]})
 
 # output {{{
 print -f 'Content-Type: text/html; charset="utf-8"\r\n\r\n'
@@ -176,7 +176,7 @@ $(
   (( $#terms )) || exit
   $gropetool "${(@)terms}" | while read cnt file; do
     # html-safe
-    file=${file//${(k~j:|:)to_html}/$to_html[$match[1]]}
+    file=${file//(#b)${~${(kj:|:)to_html}}/$to_html[$match[1]]}
     print -f '<li>%d hits in <a href="%s%s">%s</a></li>\n' \
       $cnt "$url_prefix" $file ${file/%.rest/.html}
   done
