@@ -1,13 +1,12 @@
 #!/usr/bin/env zsh
 # vim: ts=2 sts=2 sw=2 et fdm=marker cms=\ #\ %s
 
-# this is web interface to git-grope
-# it reads its configuration from the GIT_GROPE_CONFIG env var
-# which defaults to "$PWD/git-grope.config".
+# git-grope.cgi is a web interface to git-grope.
 #
-# git-grope.cgi can be used for multiple Git repositories,
-# each needs to have a section in the config file.  $PATH_INFO
-# is used to lookup the appropriate section in the config file.
+# It reads its configuration from the GIT_GROPE_CONFIG env var
+# which defaults to "$PWD/git-grope.config"; $PATH_INFO (with
+# any leading/trailing slashes removed) names the configuration
+# `section` to use.
 #
 # further reading: example-git-grope.config.
 
