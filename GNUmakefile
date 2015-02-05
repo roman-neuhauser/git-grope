@@ -14,6 +14,7 @@ INSTALL_SCRIPT ?= install -m 755
 RST2HTML       ?= $(call first_in_path,rst2html.py rst2html)
 
 SHELL           = $(call first_in_path,zsh)
+PATH            = /usr/bin:/bin:/usr/sbin:/sbin
 
 name            = git-grope
 
@@ -40,7 +41,7 @@ clean:
 
 .PHONY: check
 check: $(.DEFAULT_GOAL)
-	env -i CRAM="$(CRAM)" SHELL="$(SHELL)" $(CRAMCMD) --shell=$(SHELL) tests
+	env -i CRAM="$(CRAM)" PATH="$(PATH)" SHELL="$(SHELL)" $(CRAMCMD) --shell=$(SHELL) tests
 
 .PHONY: html
 html: README.html
