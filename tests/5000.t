@@ -13,10 +13,14 @@ setup
   $ export PATH_INFO=/$TESTFILE/
 
   $ cat > $GIT_GROPE_CONFIG <<EOF
+  > # first, 0-column comment
   > section $TESTFILE
+  >   # second, indented comment
   >   GIT_WORK_TREE   \$PWD
   >   GIT_DIR         \$PWD/.git
   >   syntax          bre
+  >   # another indented comment
+  > # last, 0-column comment
   > EOF
 
 test

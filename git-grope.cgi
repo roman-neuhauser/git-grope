@@ -30,8 +30,8 @@ function load-config # {{{
 # a statement spans an /^\S/ line possibly followed
 # by a run of /^\s+/ lines;
 # empty lines are ignored, even within statements;
-# comments start with '#';
-# usual shell lexing rules apply
+# /^\s*#.*/ lines are ignored;
+# usual shell lexing rules apply within the rest
 {
   local wanted=$1 cfgfile=$2
   local default= stmt=
@@ -51,14 +51,18 @@ function load-config # {{{
   local line
   for line in "${(@f):-$(cat $cfgfile)}" __EOF__; do
     case $line in
-    '') # ignored
+    '')
+      # ignored
+    ;;
+    ([[:space:]])#\#*)
+      # ignored
     ;;
     [[:space:]]*)
       stmt+=$line
     ;;
     *)
       if [[ -n $stmt ]]; then
-        local -a w; w=("${(Z:C:)stmt}")
+        local -a w; w=("${(z)stmt}")
         case $w[1] in
         default) default=$w[2] ;;
         section)
