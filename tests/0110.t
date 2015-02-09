@@ -1,5 +1,5 @@
-in-worktree operation
-=====================
+out-of-worktree operation
+=========================
 
 setup
 *****
@@ -9,7 +9,8 @@ setup
   $ . $TESTDIR/setup
 
   $ init-repo checkout
-  $ cd checkout
+  $ export GIT_WORK_TREE=$PWD/checkout
+  $ export GIT_DIR=$PWD/checkout/.git
 
 test
 ****
