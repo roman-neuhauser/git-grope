@@ -1,8 +1,6 @@
 # norootforbuild
 # Maintainer: Roman Neuhauser <neuhauser+git-grope@sigpipe.cz>
 
-%define _upstreamver __VERSION__
-
 Name:           git-grope
 Version:        __VERSION__
 Release:        0
@@ -10,7 +8,7 @@ License:        MIT
 Summary:        List tracked files matching patterns
 Url:            https://github.com/roman-neuhauser/%{name}
 Group:          Development/Tools/Version Control
-Source:         %{name}-%{_upstreamver}.tar.gz
+Source:         %{name}-%{version}.tar.gz
 BuildRequires:  filesystem
 BuildArch:      noarch
 BuildRoot:      %_tmppath/%name-%version-build
@@ -28,7 +26,7 @@ git-grope(1) outputs paths to files matching given patterns,
 in decreasing order of relevance.
 
 %prep
-%setup -qn %{name}-%{_upstreamver}
+%setup -q
 
 %build
 %gitgrope_make most

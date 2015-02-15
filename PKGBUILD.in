@@ -1,7 +1,6 @@
 # Maintainer: Roman Neuhauser <neuhauser+git-grope@sigpipe.cz>
 pkgname=git-grope
 pkgver=__VERSION__
-_upstreamver=__VERSION__
 pkgrel=1
 pkgdesc="List tracked files matching patterns"
 arch=(any)
@@ -9,7 +8,7 @@ url="https://github.com/roman-neuhauser/$pkgname"
 license=(MIT)
 depends=(git zsh)
 checkdepends=(cram git zsh)
-source=($pkgname-$_upstreamver.tar.gz)
+source=($pkgname-$pkgver.tar.gz)
 sha1sums=(SKIP)
 
 build() {
@@ -25,7 +24,7 @@ package() {
 }
 
 _make() {
-  cd "$srcdir/$pkgname-$_upstreamver"
+  cd "$srcdir/$pkgname-$pkgver"
   make PREFIX=/usr MANDIR=/usr/share/man "$@"
 }
 
