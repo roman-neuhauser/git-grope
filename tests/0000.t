@@ -1,5 +1,5 @@
-no repo
-=======
+insufficient inputs
+===================
 
 setup
 *****
@@ -13,7 +13,12 @@ test
 
 ::
 
-  $ git grope foo
-  fatal: Not a git repository * (glob)
-  [4]
+  $ grope
+  grope: no PATTERNs specified
+  grope: Usage: grope {-h|[options] PATTERN [FILE]...}
+  grope: Use "grope -h" to see the full option listing.
+  [1]
 
+::
+
+  $ grope foo

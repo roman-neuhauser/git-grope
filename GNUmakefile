@@ -18,10 +18,11 @@ PATH            = /usr/bin:/bin:/usr/sbin:/sbin
 
 name            = git-grope
 
-installed       = $(name).1.gz $(name)
-artifacts       = $(installed) README.html PKGBUILD $(name).spec
+programs        = git-grope grope
+manpages        = $(programs:%=%.1.gz)
 
-sources         = $(name).zsh
+installed       = $(programs) $(manpages)
+artifacts       = $(installed) README.html PKGBUILD $(name).spec
 
 revname         = $(shell git describe --always --first-parent)
 
@@ -50,8 +51,8 @@ html: README.html
 install: $(installed)
 	$(INSTALL_DIR) $(DESTDIR)$(BINDIR)
 	$(INSTALL_DIR) $(DESTDIR)$(MAN1DIR)
-	$(INSTALL_SCRIPT) $(name) $(DESTDIR)$(BINDIR)/$(name)
-	$(INSTALL_DATA) $(name).1.gz $(DESTDIR)$(MAN1DIR)/$(name).1.gz
+	$(INSTALL_SCRIPT) -t $(DESTDIR)$(BINDIR) $(programs)
+	$(INSTALL_DATA) -t $(DESTDIR)$(MAN1DIR) $(manpages)
 
 .PHONY: tarball
 tarball: .git
@@ -67,10 +68,10 @@ tarball: .git
 %.html: %.rest
 	$(RST2HTML) --strict $< $@
 
-$(name): $(name).zsh
+$(programs): %: %.zsh
 	$(INSTALL_SCRIPT) $< $@
 
-$(name).spec: $(name).spec.in
+%.spec: %.spec.in
 	$(call subst_version,^Version:)
 
 PKGBUILD: PKGBUILD.in
@@ -82,7 +83,7 @@ define subst_version
 	    $< | tee $@ >/dev/null
 endef
 
-fix_version = $${$${$${:-$(revname)}\#v}:gs/-/+}
+fix_version = $(subst -,+,$(patsubst v%,%,$(revname)))
 
 define first_in_path
 $(or \
