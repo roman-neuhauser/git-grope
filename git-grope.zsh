@@ -16,19 +16,21 @@ usage() # {{{
     elif (( exit == 2 )); then
       print -f "%s: unknown option -%c\n" "$self" "$1"
     elif (( exit == 3 )); then
-      print -f "%s: no patterns specified\n" "$self"
+      print -f "%s: no PATTERNs specified\n" "$self"
     fi
-    print -f "%s: Usage: %s {-h|[options] PATTERN [PATH]...}\n" "$self" "$self"
+    print -f "%s: Usage: %s {-h|[options] PATTERN [FILE]...}\n" "$self" "$self"
     if (( exit != 0 )); then
       print -f "%s: Use \"%s -h\" to see the full option listing.\n" "$self" "$self"
     else
       print -f "  Options:\n"
-      print -f "    %-16s  %s\n" \
+      print -f "    %-16s  %s\n" -- \
         "-h"              "Display this message" \
         "-E"              "Interpret PATTERNs as extended regular expressions (ERE)" \
         "-F"              "Interpret PATTERNs as a fixed strings" \
         "-G"              "Interpret PATTERNs as basic regular expressions (ERE)" \
-        "-P"              "Interpret PATTERNs as Perl regular expressions (PCRE)"
+        "-P"              "Interpret PATTERNs as Perl regular expressions (PCRE)" \
+        "-e PATTERN"      "Use PATTERN for matching" \
+
     fi
   } >&$fd
   if (( exit == 0 )); then
