@@ -1,13 +1,13 @@
 # Maintainer: Roman Neuhauser <neuhauser+git-grope@sigpipe.cz>
-pkgname=git-grope
+pkgbase=git-grope
+pkgname=(git-grope grope)
 pkgver=__VERSION__
 pkgrel=1
-pkgdesc="List tracked files matching patterns"
 arch=(any)
 url="https://github.com/roman-neuhauser/$pkgname"
 license=(MIT)
-depends=(git zsh)
-checkdepends=(cram git zsh)
+depends=(zsh)
+checkdepends=(cram zsh)
 source=($pkgname-$pkgver.tar.gz)
 sha1sums=(SKIP)
 
@@ -19,12 +19,20 @@ check() {
   _make check
 }
 
-package() {
-  _make install DESTDIR="$pkgdir/"
+package_git-grope() {
+  pkgdesc="List tracked files matching patterns"
+  depends+=(git)
+  checkdepends+=(git)
+  _make install-git-grope DESTDIR="$pkgdir/"
+}
+
+package_grope() {
+  pkgdesc="List files matching patterns"
+  _make install-grope DESTDIR="$pkgdir/"
 }
 
 _make() {
-  cd "$srcdir/$pkgname-$pkgver"
+  cd "$srcdir/$pkgbase-$pkgver"
   make PREFIX=/usr MANDIR=/usr/share/man "$@"
 }
 
