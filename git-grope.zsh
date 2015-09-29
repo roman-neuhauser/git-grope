@@ -46,6 +46,7 @@ while getopts :EFGPe:h optname; do
   E|F|G|P) grep+=(-$optname) ;;
   I|i|w) grep+=(-$optname) ;;
   e) terms+=($OPTARG) ;;
+  h) usage 0 ;;
   :) usage 1 $OPTARG ;;
   ?) usage 2 $OPTARG ;;
   esac
