@@ -48,11 +48,21 @@ check: $(.DEFAULT_GOAL)
 html: README.html
 
 .PHONY: install
-install: $(installed)
+install: install-grope install-git-grope
+
+.PHONY: install-git-grope
+install-git-grope: $(installed)
 	$(INSTALL_DIR) $(DESTDIR)$(BINDIR)
 	$(INSTALL_DIR) $(DESTDIR)$(MAN1DIR)
-	$(INSTALL_SCRIPT) -t $(DESTDIR)$(BINDIR) $(programs)
-	$(INSTALL_DATA) -t $(DESTDIR)$(MAN1DIR) $(manpages)
+	$(INSTALL_SCRIPT) -t $(DESTDIR)$(BINDIR) $(filter git-%,$(programs))
+	$(INSTALL_DATA) -t $(DESTDIR)$(MAN1DIR) $(filter git-%,$(manpages))
+
+.PHONY: install-grope
+install-grope: $(installed)
+	$(INSTALL_DIR) $(DESTDIR)$(BINDIR)
+	$(INSTALL_DIR) $(DESTDIR)$(MAN1DIR)
+	$(INSTALL_SCRIPT) -t $(DESTDIR)$(BINDIR) $(filter-out git-%,$(programs))
+	$(INSTALL_DATA) -t $(DESTDIR)$(MAN1DIR) $(filter-out git-%,$(manpages))
 
 .PHONY: tarball
 tarball: .git
