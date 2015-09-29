@@ -178,7 +178,11 @@ cat <<HTML
    <ol>
 $(
   (( $#terms )) || exit
-  $gropetool "${(@)terms}" | while read cnt file; do
+  declare -a eterms
+  for t in $terms; do
+    eterms+=(-e $t)
+  done
+  $gropetool "${(@)eterms}" | while read cnt file; do
     # html-safe
     file=${file//(#b)(${~${(kj:|:)to_html}})/$to_html[$match[1]]}
     print -f '<li>%d hits in <a href="%s%s">%s</a></li>\n' \

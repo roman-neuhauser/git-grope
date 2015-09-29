@@ -58,9 +58,9 @@ test
      results:
   
      <ol>
-  <li>13 hits in <a href="/file/pg/pg14522.txt">pg/pg14522.txt</a></li>
-  <li>5 hits in <a href="/file/pg/pg31469.txt">pg/pg31469.txt</a></li>
-  <li>1 hits in <a href="/file/pg/pg42704.txt">pg/pg42704.txt</a></li>
+  <li>14 hits in <a href="/file/pg/pg14522.txt">pg/pg14522.txt</a></li>
+  <li>8 hits in <a href="/file/pg/pg31469.txt">pg/pg31469.txt</a></li>
+  <li>3 hits in <a href="/file/pg/pg42704.txt">pg/pg42704.txt</a></li>
      </ol>
      </p>
   

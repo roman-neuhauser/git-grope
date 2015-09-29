@@ -65,7 +65,13 @@ fi
 
 git rev-parse --is-inside-work-tree >/dev/null || exit 4
 
-declare -a files; files=($(git ls-files))
+declare -a files
+
+if (( $# )); then
+  files=("$@")
+else
+  files=($(git ls-files))
+fi
 
 declare -i cnt=0 max=0
 declare file term
