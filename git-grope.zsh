@@ -5,6 +5,16 @@ set -eu
 
 _SELF=${${0:t}/#git-/git }
 
+function list-files # {{{
+{
+  local -a reply
+  reply=($(git ls-files))
+  : ${(AP)1::=$reply}
+} # }}}
+
+git rev-parse --is-inside-work-tree >/dev/null || exit 4
+cd ${GIT_WORK_TREE:-.}
+
 usage() # {{{
 {
   local self="$_SELF" exit=${1?} fd=1
@@ -63,14 +73,12 @@ if (( !${#terms} )); then
   usage 3
 fi
 
-git rev-parse --is-inside-work-tree >/dev/null || exit 4
-
 declare -a files
 
 if (( $# )); then
   files=("$@")
 else
-  files=($(git ls-files))
+  list-files files
 fi
 
 declare -i cnt=0 max=0
@@ -79,7 +87,7 @@ declare -a hits
 
 for file in $files; do
   for term in $terms; do
-    grep $grep -oe $term ${${GIT_WORK_TREE:-.}%/}/$file
+    grep $grep -oe $term ./$file
   done | wc -l | read cnt
   if (( cnt > max )); then
     max=$cnt
