@@ -43,4 +43,6 @@ test
   $ git grope -Fe natural -e language
   14 pg/pg14522.txt
    8 pg/pg31469.txt
+   4 ewd/ewd251.rst
    3 pg/pg42704.txt
+   3 ewd/ewd215.rst

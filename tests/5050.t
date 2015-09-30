@@ -60,7 +60,9 @@ test
      <ol>
   <li>14 hits in <a href="/file/pg/pg14522.txt">pg/pg14522.txt</a></li>
   <li>8 hits in <a href="/file/pg/pg31469.txt">pg/pg31469.txt</a></li>
+  <li>4 hits in <a href="/file/ewd/ewd251.rst">ewd/ewd251.rst</a></li>
   <li>3 hits in <a href="/file/pg/pg42704.txt">pg/pg42704.txt</a></li>
+  <li>3 hits in <a href="/file/ewd/ewd215.rst">ewd/ewd215.rst</a></li>
      </ol>
      </p>
   

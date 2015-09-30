@@ -5,6 +5,7 @@ emulate -R zsh
 
 setopt extended_glob
 setopt errreturn
+setopt pipe_fail
 setopt no_unset
 setopt warn_create_global
 
@@ -93,7 +94,7 @@ declare -a hits
 
 for file in $files; do
   for term in $terms; do
-    grep $grep -oe $term ./$file
+    grep $grep -oe $term ./$file || :
   done | wc -l | read cnt
   if (( cnt > max )); then
     max=$cnt
