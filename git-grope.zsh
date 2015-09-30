@@ -1,7 +1,13 @@
 #!/usr/bin/env zsh
 # vim: ts=2 sts=2 sw=2 et fdm=marker cms=\ #\ %s
 
-set -eu
+emulate -R zsh
+
+setopt extended_glob
+setopt errreturn
+setopt no_unset
+setopt warn_create_global
+
 
 _SELF=${${0:t}/#git-/git }
 
