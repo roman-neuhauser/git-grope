@@ -7,7 +7,7 @@ setup
 ::
 
   $ . $TESTDIR/setup
-  $ SCRIPT=$TESTDIR:h/git-grope.cgi
+  $ SCRIPT=$TESTDIR:h/grope.cgi
 
   $ export GIT_GROPE_CONFIG=$PWD/${TESTFILE:r}.config
   $ export PATH_INFO=/$TESTFILE/

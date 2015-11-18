@@ -6,7 +6,7 @@ setup
 
 ::
 
-  $ SCRIPT=$TESTDIR:h/git-grope.cgi
+  $ SCRIPT=$TESTDIR:h/grope.cgi
 
   $ . $TESTDIR/setup
 
