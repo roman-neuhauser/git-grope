@@ -12,12 +12,27 @@ setopt warn_create_global
 
 _SELF=${0:t}
 
+_INSIDE_GIT=0
+if [[ $_SELF == git-* ]]; then
+  _INSIDE_GIT=1
+  _SELF=${${0:t}/#git-/git }
+fi
+
 function list-files # {{{
 {
   local -a reply
-  reply=(**/*(N.))
+  if (( _INSIDE_GIT )); then
+    reply=($(git ls-files))
+  else
+    reply=(**/*(N.))
+  fi
   : ${(AP)1::=$reply}
 } # }}}
+
+if (( _INSIDE_GIT )); then
+  git rev-parse --is-inside-work-tree >/dev/null || exit 4
+  cd ${GIT_WORK_TREE:-.}
+fi
 
 usage() # {{{
 {

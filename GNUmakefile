@@ -78,7 +78,7 @@ tarball: .git
 %.html: %.rest
 	$(RST2HTML) --strict $< $@
 
-$(programs): %: %.zsh
+$(programs): %: grope.zsh
 	$(INSTALL_SCRIPT) $< $@
 
 %.spec: %.spec.in
