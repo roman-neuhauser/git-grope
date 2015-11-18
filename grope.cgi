@@ -3,7 +3,7 @@
 
 # git-grope.cgi is a web interface to git-grope.
 #
-# It reads its configuration from the GIT_GROPE_CONFIG env var
+# It reads its configuration from the GROPE_CONFIG env var
 # which defaults to "$PWD/git-grope.config"; $PATH_INFO (with
 # any leading/trailing slashes removed) names the configuration
 # `section` to use.
@@ -12,8 +12,8 @@
 
 setopt extended_glob
 
-declare cfgfile=${GIT_GROPE_CONFIG-$PWD/git-grope.config}
-declare gropetool='git-grope'
+declare cfgfile=${GROPE_CONFIG-$PWD/git-grope.config}
+declare gropetool='grope'
 declare syntax=fix
 declare url_prefix=
 declare heap=${${${PATH_INFO#/}%/}:-default}
@@ -23,7 +23,7 @@ declare -a terms
 declare -A checked
 
 function load-config # {{{
-# populate $GIT_GROPE_CFG w/ $wanted section data from $cfgfile
+# populate $GROPE_CFG w/ $wanted section data from $cfgfile
 #
 # config file is a sequence of statements;
 # a statement spans an /^\S/ line possibly followed
@@ -66,7 +66,7 @@ function load-config # {{{
         default) default=$w[2] ;;
         section)
           sections+=($w[2])
-          local name=GIT_GROPE_SETTINGS_${${w[2]}//[^[:IDENT:]]/_}
+          local name=GROPE_SETTINGS_${${w[2]}//[^[:IDENT:]]/_}
           declare -Ag $name
           : "${(AAP)name::=${(@)w}}"
         ;;
@@ -87,16 +87,16 @@ function load-config # {{{
       -- $wanted $cfgfile
   fi
 
-  local name=GIT_GROPE_SETTINGS_${wanted//[^[:IDENT:]]/_}
-  declare -Ag GIT_GROPE_CFG; GIT_GROPE_CFG=(${(Pkv)name})
+  local name=GROPE_SETTINGS_${wanted//[^[:IDENT:]]/_}
+  declare -Ag GROPE_CFG; GROPE_CFG=(${(Pkv)name})
 } # }}}
 
 function set-config-vars # {{{
 {
   local n
-  for n in GIT_WORK_TREE GIT_DIR gropetool syntax url_prefix; do
-    if (( ${+GIT_GROPE_CFG[$n]} )); then
-      : ${(P)n::=${(e)GIT_GROPE_CFG[$n]}}
+  for n in GIT_WORK_TREE GIT_DIR gropetool syntax url_prefix worktree; do
+    if (( ${+GROPE_CFG[$n]} )); then
+      : ${(P)n::=${(e)GROPE_CFG[$n]}}
       [[ $n == GIT_* ]] && export $n
     fi
   done
@@ -135,6 +135,12 @@ load-config $heap $cfgfile || exit 1
 set-config-vars
 
 handle-user-inputs
+
+if [[ $gropetool:t == git-* ]]; then
+  cd ${GIT_WORK_TREE:?} || exit 1
+else
+  cd ${worktree:?} || exit 1
+fi
 
 declare -A to_html; to_html=(
   \& '&#0038;'

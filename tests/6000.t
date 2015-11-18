@@ -16,9 +16,10 @@ setup
   > # first, 0-column comment
   > section $TESTFILE
   >   # second, indented comment
-  >   gropetool       grope
+  >   GIT_WORK_TREE   \$PWD
+  >   GIT_DIR         \$PWD/.git
+  >   gropetool       git-grope
   >   syntax          bre
-  >   worktree        \$PWD
   >   # another indented comment
   > # last, 0-column comment
   > EOF

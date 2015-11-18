@@ -18,10 +18,11 @@ setup
 
   $ cat > $GROPE_CONFIG <<EOF
   > section $TESTFILE
-  >   gropetool       grope
+  >   GIT_WORK_TREE   \$PWD/checkout
+  >   GIT_DIR         \$PWD/checkout/.git
+  >   gropetool       git-grope
   >   syntax          bre
   >   url_prefix      /file/
-  >   worktree        \$PWD/checkout
   > EOF
 
 test
